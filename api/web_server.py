@@ -2,8 +2,6 @@ import dill
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
-# from ..core.search_engine import PromptSearchEngine
-
 
 class Query(BaseModel):
     prompt: str

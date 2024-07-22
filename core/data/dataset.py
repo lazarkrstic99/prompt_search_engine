@@ -1,5 +1,4 @@
 from datasets import load_dataset
-from core.search_engine import PromptSearchEngine
 
 
 class PromptDataset:
@@ -34,11 +33,3 @@ class PromptDataset:
 
         return [item['Prompt'] for item in self.dataset['test']]
 
-
-# if __name__ == "__main__":
-#     dataset = PromptDataset("Gustavosta/Stable-Diffusion-Prompts")
-#     dataset.load()
-#     prompts = dataset.get_prompts()
-#     engine = PromptSearchEngine(prompts)
-#     result = engine.most_similar("dark")
-#     print(result)

@@ -1,6 +1,6 @@
 import uvicorn
 
-from .web_server import app
+from web_server import app
 
 
 def run():
