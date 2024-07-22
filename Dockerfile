@@ -1,37 +1,37 @@
-# FROM python:3.9 as core
-#
-# COPY ./core/requirements.txt ./requirements.txt
-# RUN pip install -r requirements.txt
-#
-# WORKDIR /app
-#
-# COPY ./core .
-# RUN python ./initialization.py
-#
-# FROM python:3.9
-#
-# COPY ./api/requirements.txt ./requirements.txt
-# RUN pip install -r requirements.txt
-#
-# WORKDIR /app
-# COPY ./api .
-#
-# COPY --from=core /app/engine.pickle /app/engine.pickle
-#
-# EXPOSE 9999
-# ENTRYPOINT ["python", "service_manager.py"]
-FROM python:3.9 as build
+FROM python:3.9 AS install
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends build-essential gcc
 
-COPY ./requirements.txt ./requirements.txt
-RUN pip install -r requirements.txt
+COPY ./api/requirements.txt ./api/requirements.txt
+RUN pip install --user -r ./api/requirements.txt
+
+COPY ./core/requirements.txt ./core/requirements.txt
+RUN pip install --user -r ./core/requirements.txt
+
+##################################################################
+FROM python:3.9 AS setup
+COPY --from=install /root/.local /root/.local
 
 WORKDIR /app
+COPY ./core .
+RUN python ./run.py
 
-COPY . .
+##################################################################
+FROM python:3.9
 
-RUN mkdir -p /app/cache && chmod -R 777 /app/cache
+RUN useradd -m -u 1000 user
+USER user
+ENV HOME=/home/user \
+    PATH=/home/user/.local/bin:$PATH
 
-ENV TRANSFORMERS_CACHE=/app/cache
+COPY --from=install --chown=user /root/.local /home/user/.local
 
-EXPOSE 9999
-ENTRYPOINT ["python", "run.py"]
+WORKDIR $HOME/app
+
+COPY --chown=user ./core ./core
+COPY --chown=user ./api ./api
+
+COPY --from=setup --chown=user /app/engine.pickle ./engine.pickle
+
+EXPOSE 7860
+ENTRYPOINT ["python", "api/run.py"]
