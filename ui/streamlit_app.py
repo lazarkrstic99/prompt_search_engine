@@ -1,3 +1,10 @@
+"""
+This Streamlit application interfaces with a FastAPI backend to search for prompts based on user input.
+
+The user can enter a prompt and specify the number of similar results they want to retrieve.
+The application then sends a request to the FastAPI endpoint and displays the results.
+"""
+
 import streamlit as st
 import requests
 

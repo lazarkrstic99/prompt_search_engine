@@ -6,12 +6,16 @@ from .vectorizer import Vectorizer
 
 class PromptSearchEngine(object):
     """
-    TODO
+    The PromptSearchEngine is responsible for finding the most similar prompts to a given query
+    by leveraging vectorized representations of the prompts and a similarity search index.
     """
 
     def __init__(self, prompts: Sequence[str]) -> None:
         """
-        TODO
+        Initialize the PromptSearchEngine with a list of prompts.
+
+        Args:
+            prompts (Sequence[str]): The sequence of raw corpus prompts to be indexed for similarity search.
         """
 
         self.vectorizer = Vectorizer()
@@ -26,7 +30,14 @@ class PromptSearchEngine(object):
 
     def most_similar(self, query: str, n: int = 5) -> List[Tuple[float, str]]:
         """
-        TODO
+        Find the most similar prompts to a given query.
+
+        Args:
+            query (str): The query prompt to search for similar prompts.
+            n (int, optional): The number of similar prompts to retrieve. Defaults to 5.
+
+        Returns:
+            List[Tuple[float, str]]: A list of tuples containing the similarity score and the corresponding prompt.
         """
 
         query_vector = self.vectorizer.transform([query]).astype('float32')
