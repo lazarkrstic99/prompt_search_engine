@@ -5,9 +5,8 @@ The user can enter a prompt and specify the number of similar results they want 
 The application then sends a request to the FastAPI endpoint and displays the results.
 """
 
-import streamlit as st
 import requests
-
+import streamlit as st
 
 API_URL = "http://localhost:8000/search/"
 

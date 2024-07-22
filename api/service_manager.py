@@ -1,5 +1,6 @@
-from .web_server import app
 import uvicorn
+
+from .web_server import app
 
 
 def run():
@@ -8,5 +9,3 @@ def run():
     """
 
     uvicorn.run(app, host="0.0.0.0", port=7860)
-
-

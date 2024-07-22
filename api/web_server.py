@@ -1,6 +1,7 @@
 import dill
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+
 # from ..core.search_engine import PromptSearchEngine
 
 
@@ -11,7 +12,7 @@ class Query(BaseModel):
 
 app = FastAPI()
 
-with open('./engine.pickle', 'rb') as file:
+with open("./engine.pickle", "rb") as file:
     serialized_engine = file.read()
 
 prompt_search_engine = dill.loads(serialized_engine)
@@ -46,7 +47,9 @@ async def search(query: Query):
             raise ValueError("Prompt must be a string")
 
         results = prompt_search_engine.most_similar(query.prompt, query.n)
-        formatted_results = [{"score": float(score), "description": desc} for score, desc in results]
+        formatted_results = [
+            {"score": float(score), "description": desc} for score, desc in results
+        ]
 
         return formatted_results
 

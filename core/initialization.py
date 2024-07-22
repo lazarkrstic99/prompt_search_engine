@@ -1,6 +1,7 @@
 import dill
-from .search_engine import PromptSearchEngine
+
 from .data.dataset import PromptDataset
+from .search_engine import PromptSearchEngine
 
 
 def run():
