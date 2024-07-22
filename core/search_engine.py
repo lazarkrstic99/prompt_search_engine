@@ -6,7 +6,7 @@ import numpy as np
 from .vectorizer import Vectorizer
 
 
-class PromptSearchEngine():
+class PromptSearchEngine:
     """
     The PromptSearchEngine is responsible for finding the most similar prompts to a given query
     by leveraging vectorized representations of the prompts and a similarity search index.

@@ -4,7 +4,7 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 
 
-class Vectorizer():
+class Vectorizer:
     """
     The Vectorizers role is to transform textual prompts into numerical vectors that can be
     compared in a high-dimensional space. This transformation allows the system to quantify the
