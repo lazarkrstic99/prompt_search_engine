@@ -14,6 +14,10 @@ prompt_search_engine = None
 
 
 def engine():
+    """
+    Helper function which checks if prompt_search_engine is loaded. This is used to escape finding module errors.
+    """
+
     if not prompt_search_engine:
         load()
 
@@ -21,6 +25,10 @@ def engine():
 
 
 def load():
+    """
+    Helper function that loads prompt_search_engine.
+    """
+
     global prompt_search_engine
 
     with open("./engine.pickle", "rb") as file:
