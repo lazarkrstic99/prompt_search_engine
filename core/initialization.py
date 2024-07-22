@@ -17,5 +17,3 @@ def run():
 
     with open("engine.pickle", "wb") as file:
         file.write(serialized_engine)
-
-run()
