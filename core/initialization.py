@@ -1,6 +1,6 @@
 import dill
-from data.dataset import PromptDataset
-from core.search_engine import PromptSearchEngine
+from .search_engine import PromptSearchEngine
+from .data.dataset import PromptDataset
 
 
 def run():
@@ -17,3 +17,5 @@ def run():
 
     with open("engine.pickle", "wb") as file:
         file.write(serialized_engine)
+
+run()

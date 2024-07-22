@@ -1,4 +1,4 @@
-from web_server import app
+from .web_server import app
 import uvicorn
 
 

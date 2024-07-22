@@ -1,7 +1,7 @@
 from typing import List, Sequence, Tuple
 import numpy as np
 import faiss
-from core.vectorizer import Vectorizer
+from .vectorizer import Vectorizer
 
 
 class PromptSearchEngine(object):
