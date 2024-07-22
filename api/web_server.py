@@ -10,11 +10,23 @@ class Query(BaseModel):
 
 
 app = FastAPI()
+prompt_search_engine = None
 
-with open("./engine.pickle", "rb") as file:
-    serialized_engine = file.read()
 
-prompt_search_engine = dill.loads(serialized_engine)
+def engine():
+    if not prompt_search_engine:
+        load()
+
+    return prompt_search_engine
+
+
+def load():
+    global prompt_search_engine
+
+    with open("./engine.pickle", "rb") as file:
+        serialized_engine = file.read()
+
+    prompt_search_engine = dill.loads(serialized_engine)
 
 
 @app.post("/search/")
@@ -45,7 +57,7 @@ async def search(query: Query):
         if not isinstance(query.n, int):
             raise ValueError("Prompt must be a string")
 
-        results = prompt_search_engine.most_similar(query.prompt, query.n)
+        results = engine().most_similar(query.prompt, query.n)
         formatted_results = [
             {"score": float(score), "description": desc} for score, desc in results
         ]

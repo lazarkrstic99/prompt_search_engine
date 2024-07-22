@@ -1,22 +1,27 @@
-"""
-This Streamlit application interfaces with a FastAPI backend to search for prompts based on user input.
-
-The user can enter a prompt and specify the number of similar results they want to retrieve.
-The application then sends a request to the FastAPI endpoint and displays the results.
-"""
-
 import requests
 import streamlit as st
 
-API_URL = "http://localhost:8000/search/"
+LOCAL_API_URL = "http://localhost:7860"
+HF_SPACES_API_URL = "https://krstakis-prompt-search-engine.hf.space"
 
 st.title("Prompt Search Engine")
+
+api_server = st.radio(
+    "Choose the API server:",
+    ('Local', 'Hugging Face Spaces'),
+    index=1
+)
+
+if api_server == 'Local':
+    API_URL = LOCAL_API_URL
+else:
+    API_URL = HF_SPACES_API_URL
 
 prompt = st.text_input("Enter a prompt")
 n = st.slider("Number of results", 1, 20, 5)
 
 if st.button("Search"):
-    response = requests.post(API_URL, json={"prompt": prompt, "n": n})
+    response = requests.post(API_URL + "/search/", json={"prompt": prompt, "n": n})
     if response.status_code == 200:
         results = response.json()
         for result in results:
@@ -24,4 +29,4 @@ if st.button("Search"):
             result_prompt = result["description"]
             st.write(f"Score: {score:.4f}, Prompt: {result_prompt}")
     else:
-        st.error("Error: Could not retrieve results")
+        st.error(f"Error: Could not retrieve results. Status code: {response.status_code}")
