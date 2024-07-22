@@ -1,6 +1,19 @@
+import os
+import sys
+import inspect
 import dill
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+
+
+current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parent_dir = os.path.dirname(current_dir)
+prev_dir = sys.path
+sys.path.insert(0, parent_dir+"/core")
+
+import search_engine
+
+sys.path = prev_dir
 
 
 class Query(BaseModel):
