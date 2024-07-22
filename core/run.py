@@ -1,3 +1,0 @@
-import initialization
-
-initialization.run()

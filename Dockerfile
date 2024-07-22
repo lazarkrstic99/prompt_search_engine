@@ -13,8 +13,10 @@ FROM python:3.9 AS setup
 COPY --from=install /root/.local /root/.local
 
 WORKDIR /app
-COPY ./core .
-RUN python ./run.py
+COPY ./core ./core
+COPY ./init.py .
+
+RUN python ./init.py
 
 ##################################################################
 FROM python:3.9
@@ -28,10 +30,9 @@ COPY --from=install --chown=user /root/.local /home/user/.local
 
 WORKDIR $HOME/app
 
-COPY --chown=user ./core ./core
-COPY --chown=user ./api ./api
+COPY --chown=user . .
 
 COPY --from=setup --chown=user /app/engine.pickle ./engine.pickle
 
 EXPOSE 7860
-ENTRYPOINT ["python", "api/run.py"]
+ENTRYPOINT ["python", "run_api.py"]

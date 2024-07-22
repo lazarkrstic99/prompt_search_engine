@@ -1,7 +1,7 @@
 import dill
 
-from data.dataset import PromptDataset
-from search_engine import PromptSearchEngine
+from core.data.dataset import PromptDataset
+from core.search_engine import PromptSearchEngine
 
 
 def run():

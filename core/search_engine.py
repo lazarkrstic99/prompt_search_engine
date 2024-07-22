@@ -3,7 +3,7 @@ from typing import List, Sequence, Tuple
 import faiss
 import numpy as np
 
-from vectorizer import Vectorizer
+from core.vectorizer import Vectorizer
 
 
 class PromptSearchEngine:
